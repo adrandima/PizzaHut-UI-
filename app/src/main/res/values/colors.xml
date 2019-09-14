@@ -16,4 +16,7 @@
     <color name="fontGray">#635E5E</color>
     <color name="GrayType2">#F6F6F6</color>
     <color name="darkGreen">#04940A</color>
+
+    <color name="backgrountAlert">#07B4B4</color>
+    <color name="radioColor">#e75748</color>
 </resources>

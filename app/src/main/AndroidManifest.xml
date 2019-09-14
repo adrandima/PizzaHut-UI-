@@ -15,6 +15,13 @@
         <activity android:name=".Customise_Item" />
         <activity android:name=".PizzaMenu" />
         <activity android:name=".MainMenu" />
+
+        <activity android:name=".Edit" />
+        <activity android:name=".Payment" />
+        <activity android:name=".PaymentDetails" />
+        <activity android:name=".Cart"/>
+
+
         <activity android:name=".Takeaway_location" />
         <activity android:name=".Delivery_confirmation" />
         <activity android:name=".DirectionPage" />

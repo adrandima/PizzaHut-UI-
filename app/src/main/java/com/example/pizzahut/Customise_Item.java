@@ -444,6 +444,8 @@ public class Customise_Item extends AppCompatActivity {
                 }
                 else {
                     Toast.makeText(Customise_Item.this, "Your order is successfully add to the cart \n            Total Amount : Rs. "+finalPrice+"0", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getBaseContext(),Cart.class);
+                    startActivity(intent);
                 }
             }
         });
