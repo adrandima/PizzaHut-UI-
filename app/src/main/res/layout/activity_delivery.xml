@@ -81,7 +81,7 @@
                 android:layout_marginBottom="76dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:onClick="locateMe"
+                android:onClick="searchMap"
                 android:text="@string/place_autocomplete_search_hint"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

@@ -178,7 +178,7 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-    public void continueButtonAction(View view){
+    public void searchMap(View view){
         Bundle extras = new Bundle();
         Intent intent = new Intent(this, DirectionPage.class);
         intent.putExtras(extras);
@@ -187,7 +187,7 @@ public class MainMenu extends AppCompatActivity {
 
     public void locateMe(View view){
         Bundle extras = new Bundle();
-        Intent intent = new Intent(this, DirectionPage.class);
+        Intent intent = new Intent(this, LocateMeMap.class);
         intent.putExtras(extras);
         startActivity(intent);
     }

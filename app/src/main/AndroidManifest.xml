@@ -10,18 +10,16 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tackeawayConfirmation"></activity>
+        <activity android:name=".LocateMeMap"></activity>
+        <activity android:name=".tackeawayConfirmation" />
         <activity android:name=".my_favorites" />
         <activity android:name=".Customise_Item" />
         <activity android:name=".PizzaMenu" />
         <activity android:name=".MainMenu" />
-
         <activity android:name=".Edit" />
         <activity android:name=".Payment" />
         <activity android:name=".PaymentDetails" />
-        <activity android:name=".Cart"/>
-
-
+        <activity android:name=".Cart" />
         <activity android:name=".Takeaway_location" />
         <activity android:name=".Delivery_confirmation" />
         <activity android:name=".DirectionPage" />
@@ -60,10 +58,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

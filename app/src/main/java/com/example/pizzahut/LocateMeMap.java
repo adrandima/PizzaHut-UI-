@@ -65,9 +65,9 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class DirectionPage extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener{
+public class LocateMeMap extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener{
 
-
+    Marker prevMarker;
     LatLng origin = new LatLng(6.904766, 79.950325);
     LatLng dest = new LatLng(6.938591, 79.986942);
     public  double aa ;
@@ -75,7 +75,7 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
     public  double currentLatitude;
     public  double currentLongertude;
     public  String title;
-
+    public  String Topic = "Delivery";
     Button confirmLocation;
     public ArrayList<com.example.pizzahut.Model.Location> loc;
     MyDBHandler db;
@@ -96,7 +96,7 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         if (mLocationPermissionsGranted) {
-           // getDeviceLocation();
+            getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
@@ -120,7 +120,6 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(latLng);
 
-
                     if (listPoints.size() == 1) {
                         //Add first marker to the map
                         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
@@ -130,9 +129,12 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
                     if (listPoints.size() == 1) {
                         //Create the URL to get request from first marker to second marker
                         String url = getRequestUrl(listPoints.get(0));
+                        System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"+url);
                         currentLatitude = listPoints.get(0).latitude;
                         currentLongertude = listPoints.get(0).longitude;
+                       /* TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
 
+                        taskRequestDirections.execute(url);*/
                         createMarkers();
                     }
                 }
@@ -141,7 +143,17 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
 
 
             loc = db.getAllLocation();
+
+            System.out.println("Data base:++++++++++++++"+loc);
+
+
             createMarkers();
+
+
+
+
+
+
 
             init();
             getRequestUrl(origin);
@@ -197,60 +209,71 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
             new LatLng(-40, -168), new LatLng(71, 136));
 
 
-
+    //widgets
+    //  private AutoCompleteTextView mSearchText;
     private ImageView mGps;
-    private Boolean mLocationPermissionsGranted = false;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
 
+    //vars
+    private Boolean mLocationPermissionsGranted = false;
+    // private GoogleMap mMap;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
+    private GoogleApiClient mGoogleApiClient;
+    private AutoCompleteTextView mSearchText;
+    Dialog myDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_direction_page);
 
-
+        // mSearchText = (AutoCompleteTextView) findViewById(R.id.search_Mylocation);
         db = new MyDBHandler(this);
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
         db.insertDate();
         mGps = (ImageView) findViewById(R.id.ic_gps);
         listPoints = new ArrayList<>();
         confirmLocation = (Button) findViewById(R.id.btnGetDirection);
-
+        // getDeviceLocation();
         confirmLocation.setOnClickListener(new View.OnClickListener() {
-                                               @Override
-                                               public void onClick(View view) {
-                                                   //myDialog = new Dialog(DirectionPage.this);
-                                                   double distanceKm;
-                                                   distanceKm = distance(currentLatitude, currentLongertude, aa, bb);
-                                                if (distanceKm>=100 || distanceKm <= 0){
-                                                    Toast.makeText(DirectionPage.this, "Please select location", Toast.LENGTH_SHORT).show();
-                                                    Log.d(TAG, "onPlaceSelected: Null LatLng");
-                                                }else {
+            @Override
+            public void onClick(View view) {
+                //myDialog = new Dialog(DirectionPage.this);
+                double distanceKm;
+                distanceKm = distance(currentLatitude, currentLongertude, aa, bb);
+                if (distanceKm>=100 || distanceKm <= 0){
+                    Toast.makeText(LocateMeMap.this, "Please select location", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onPlaceSelected: Null LatLng");
+                }else {
 
-                                                    AlertDialog.Builder builder = new AlertDialog.Builder(DirectionPage.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LocateMeMap.this);
 
-                                                    LayoutInflater inflater = getLayoutInflater();
-                                                    View dialogView = inflater.inflate(R.layout.activity_delivery_confirmation, null);
-                                                    builder.setView(dialogView);
+                    LayoutInflater inflater = getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.activity_delivery_confirmation, null);
+                    builder.setView(dialogView);
 
-                                                    TextView locationName = (TextView) dialogView.findViewById(R.id.locationName);
-                                                    TextView endLocation = (TextView) dialogView.findViewById(R.id.endLocation);
-                                                    TextView distance = (TextView) dialogView.findViewById(R.id.distance);
-                                                    final AlertDialog dialog = builder.create();
-                                                    locationName.setText("Your Location");
-                                                    endLocation.setText(title);
-                                                    distance.setText(String.format("%.2f KM", distanceKm));
-                                                    // Set the custom layout as alert dialog view
-                                                    dialog.show();
+                    TextView locationName = (TextView) dialogView.findViewById(R.id.locationName);
+                    TextView endLocation = (TextView) dialogView.findViewById(R.id.endLocation);
+                    TextView distance = (TextView) dialogView.findViewById(R.id.distance);
+                    final AlertDialog dialog = builder.create();
+                    locationName.setText("Your Location");
+                    endLocation.setText(title);
+                    distance.setText(String.format("%.2f KM", distanceKm));
+                    // Set the custom layout as alert dialog view
+                    dialog.show();
 
-                                                }
+                }
 
-                                               }
-                                           });
+            }
+        });
 
+
+        //mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
 
         getLocationPermission();
-
+        //   init();
+        // getLocationPermission();
         initMap();
     }
 
@@ -306,7 +329,13 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
                     getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
             autocompleteFragment.setCountry("PH");
+
+  /*          autocompleteFragment.setLocationRestriction(RectangularBounds.newInstance(
+                    new LatLng(7.8731, 80.7718),
+                    new LatLng(7.9731, 80.9718)));
+*/
             autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
+
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 
                 @Override
@@ -321,24 +350,24 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
 
                         if (placeLatLng != null) {
                             moveCamera(placeLatLng, DEFAULT_ZOOM, placeName);
-                            Toast.makeText(DirectionPage.this, "Moving to " + placeName, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LocateMeMap.this, "Moving to " + placeName, Toast.LENGTH_SHORT).show();
                             //geoLocate();
                             //                            distanceBetween();
                         }
                         else {
-                            Toast.makeText(DirectionPage.this, "Error: cant find Location", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LocateMeMap.this, "Error: cant find Location", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "onPlaceSelected: Null LatLng");
                         }
                     }
                     else{
-                        Toast.makeText(DirectionPage.this, "Please choose a location in Gensan", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LocateMeMap.this, "Please choose a location in Gensan", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onError(@NonNull Status status) {
                     // TODO: Handle the error.
-                    Toast.makeText(DirectionPage.this, "Error: " + status, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LocateMeMap.this, "Error: " + status, Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -346,7 +375,7 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
 
 
 
-       mGps.setOnClickListener(new View.OnClickListener() {
+        mGps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked gps icon");
@@ -385,11 +414,11 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM,
                                     "My Location");
-                           // getAddress(currentLocation.getLatitude(),currentLocation.getLongitude());
+                            // getAddress(currentLocation.getLatitude(),currentLocation.getLongitude());
 
                         }else{
                             Log.d(TAG, "onComplete: current location is null");
-                            Toast.makeText(DirectionPage.this, "unable to get current location", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LocateMeMap.this, "unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -419,7 +448,7 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
         Log.d(TAG, "initMap: initializing map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        mapFragment.getMapAsync(DirectionPage.this);
+        mapFragment.getMapAsync(LocateMeMap.this);
     }
 
     private void getLocationPermission(){

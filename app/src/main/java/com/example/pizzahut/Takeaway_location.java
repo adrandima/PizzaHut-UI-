@@ -108,14 +108,14 @@ public boolean onMarkerClick(Marker marker) {
 
         if (prevMarker != null) {
         //Set prevMarker back to default color
-        prevMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+      //  prevMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         Toast.makeText(Takeaway_location.this, "Clicked:"+marker.getTitle(), Toast.LENGTH_SHORT).show();
         }
 
         //leave Marker default color if re-click current Marker
         if (!marker.equals(prevMarker)) {
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        prevMarker = marker;
+         marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+          prevMarker = marker;
         }
         prevMarker = marker;
         return false;
