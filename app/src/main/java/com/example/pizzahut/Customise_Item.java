@@ -15,8 +15,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pizzahut.Model.Location;
+import com.example.pizzahut.Service.MyDBHandler;
+
+import java.util.ArrayList;
+
 public class Customise_Item extends AppCompatActivity {
     boolean check = true;
+    boolean check1 = true;
     boolean SizeCheck1 = true;
     boolean SizeCheck2 = false;
     boolean SizeCheck3 = false;
@@ -41,19 +47,37 @@ public class Customise_Item extends AppCompatActivity {
     private CheckBox addChees;
     private Spinner spinner;
     private Button addToCart;
-    private int count = 0;
-
+    MyDBHandler db;
+    public ArrayList<String> item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customise__item);
-
+        db = new MyDBHandler(this);
         hedding = findViewById(R.id.hedding);
         hedding.setText("CUSTOMISE");
         NavButton = (ImageButton)findViewById(R.id.NavButoon);
         fav = (ImageButton)findViewById(R.id.fav);
         final Intent intent = new Intent(this,MainMenu.class);
 
+        check1 = db.findItem("one");
+        ArrayList<String> loc = db.getAllFavorite();
+        for (int i=0;i<loc.size();i++){
+
+            System.out.println("Data base input find :++++++++++++++"+loc.get(i));
+
+        }
+
+        System.out.println("====================="+check1);
+        if (check1){
+            fav.setImageResource(R.drawable.ic_favorite_black_24dp);
+            check=false;
+        }
+        else {
+            fav.setImageResource(R.drawable.ic_favorite_border_red_24dp);
+            check = true;
+
+        }
         NavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,18 +88,30 @@ public class Customise_Item extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (check == false){
+
                     fav.setImageResource(R.drawable.ic_favorite_border_red_24dp);
-                    if(count != 0) {
                         Toast.makeText(Customise_Item.this, "Item is removed from your favorites", Toast.LENGTH_LONG).show();
-                        count++;
-                    }
-                    check = true;
+
+                        db.deleteItem("one");
+                        ArrayList<String> loc = db.getAllFavorite();
+                        for (int i=0;i<loc.size();i++){
+                            System.out.println("Data base remove:++++++++++++++"+loc.get(i));
+                        }
+                        check = true;
                 }
                 else {
+
                     fav.setImageResource(R.drawable.ic_favorite_black_24dp);
                     Toast.makeText(Customise_Item.this, "Item is added to your favorites", Toast.LENGTH_LONG).show();
-                    count++;
+                    db.insertItem("one");
+                    ArrayList<String> loc = db.getAllFavorite();
+                    for (int i=0;i<loc.size();i++){
+
+                        System.out.println("Data base input:++++++++++++++"+loc.get(i));
+
+                    }
                     check=false;
+
                 }
             }
         });
