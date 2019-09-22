@@ -8,6 +8,7 @@ package com.example.pizzahut;
         import android.text.TextUtils;
         import android.widget.Button;
         import android.widget.EditText;
+        import android.widget.TextView;
         import android.widget.Toast;
 
 public class Payment extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class Payment extends AppCompatActivity {
     EditText phone;
     Button conti;
 
+    private TextView hedding;
 
 
     @Override
@@ -25,6 +27,8 @@ public class Payment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
+        hedding = findViewById(R.id.hedding);
+        hedding.setText("PAYMENT");
         title = findViewById(R.id.editText3);
         firstName = findViewById(R.id.editText4);
         lastName = findViewById(R.id.editText2);
@@ -46,13 +50,6 @@ public class Payment extends AppCompatActivity {
     }
 
     void checkDataEntered() {
-
-        if (isEmpty(title)) {
-            title.setError("title is required!");
-            Toast t = Toast.makeText(this, "You must enter title to continue!", Toast.LENGTH_SHORT);
-            t.show();
-        }
-
         if (isEmpty(firstName)) {
             firstName.setError("First name is required!");
         }

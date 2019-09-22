@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -21,6 +23,7 @@ public class PaymentDetails extends AppCompatActivity {
     EditText year;
     EditText code;
     Button pay;
+    private TextView hedding;
 
     final Context context = this;
     private Button button;
@@ -30,6 +33,8 @@ public class PaymentDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paymentdetails);
 
+        hedding = findViewById(R.id.hedding);
+        hedding.setText("PAYMENT");
 
         card = findViewById(R.id.editText3);
         month = findViewById(R.id.editText7);
@@ -89,7 +94,10 @@ public class PaymentDetails extends AppCompatActivity {
                         public void onClick(DialogInterface dialog,int id) {
                             // if this button is clicked, close
                             // current activity
+                            Toast.makeText(PaymentDetails.this, "Payment successful", Toast.LENGTH_LONG).show();
                             PaymentDetails.this.finish();
+                            startActivity(new Intent(PaymentDetails.this, MainMenu.class));
+
                         }
                     })
                     .setNegativeButton("No",new DialogInterface.OnClickListener() {

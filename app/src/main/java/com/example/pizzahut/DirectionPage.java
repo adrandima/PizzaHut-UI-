@@ -67,7 +67,7 @@ import java.util.List;
 
 public class DirectionPage extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener{
 
-
+    public static String destinationLocationName;
     LatLng origin = new LatLng(6.904766, 79.950325);
     LatLng dest = new LatLng(6.938591, 79.986942);
     public  double aa ;
@@ -124,6 +124,7 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
                     if (listPoints.size() == 1) {
                         //Add first marker to the map
                         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
                     }
                     mMap.addMarker(markerOptions);
 
@@ -237,7 +238,8 @@ public class DirectionPage extends FragmentActivity implements OnMapReadyCallbac
                                                     TextView endLocation = (TextView) dialogView.findViewById(R.id.endLocation);
                                                     TextView distance = (TextView) dialogView.findViewById(R.id.distance);
                                                     final AlertDialog dialog = builder.create();
-                                                    locationName.setText("Your Location");
+                                                    locationName.setText("Welivita");
+                                                    destinationLocationName = "Welivita";
                                                     endLocation.setText(title);
                                                     distance.setText(String.format("%.2f KM", distanceKm));
                                                     // Set the custom layout as alert dialog view

@@ -354,7 +354,7 @@ public class Customise_Item extends AppCompatActivity {
                         Crust1.setTextColor(Color.rgb(238,58,67));
                         CrustCheck1=false;
                     }
-                    if (SizeCheck3 == true){
+                    if (CrustCheck3 == true){
                         Crust3.setBackgroundColor(Color.rgb(233,187,187));
                         Crust3.setTextColor(Color.rgb(238,58,67));
                         CrustCheck3=false;

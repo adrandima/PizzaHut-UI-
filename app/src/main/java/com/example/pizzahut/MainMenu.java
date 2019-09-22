@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -36,6 +37,7 @@ public class MainMenu extends AppCompatActivity {
     private int[] myImageList = new int[]{R.drawable.one, R.drawable.two,
             R.drawable.three,R.drawable.four
             ,R.drawable.five,R.drawable.six};
+    private TextView hedding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,12 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         myDialog = new Dialog(this);
 
+        System.out.println("++++++++++++++++++++-----------------------------------------------------"+DirectionPage.destinationLocationName);
+        if(DirectionPage.destinationLocationName != null){
+
+            hedding = findViewById(R.id.hedding);
+            hedding.setText("Delivery to-Welivita");
+        }
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
         init();
@@ -87,8 +95,8 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(deliveryCheck == false){
-                    openDeliveryActivity(view);
                     deliveryCheck = true;
+                    openDeliveryActivity(view);
                     pickupCheck = false;
                 }
                 else {
@@ -101,8 +109,8 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(pickupCheck == false){
-                    openTakeaway(view);
                     pickupCheck = true;
+                    openTakeaway(view);
                     deliveryCheck =false;
                 }else {
                     pickupCheck = false;

@@ -258,6 +258,7 @@ public class LocateMeMap extends FragmentActivity implements OnMapReadyCallback,
                     TextView distance = (TextView) dialogView.findViewById(R.id.distance);
                     final AlertDialog dialog = builder.create();
                     locationName.setText("Your Location");
+                    DirectionPage.destinationLocationName = title;
                     endLocation.setText(title);
                     distance.setText(String.format("%.2f KM", distanceKm));
                     // Set the custom layout as alert dialog view
