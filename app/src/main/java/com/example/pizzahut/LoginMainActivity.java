@@ -101,7 +101,7 @@ public class LoginMainActivity extends AppCompatActivity implements AdapterView.
         }
         else
         {
-            startActivity(new Intent(LoginMainActivity.this, SignUp.class));
+            startActivity(new Intent(LoginMainActivity.this, MainActivity.class));
         }
     }
 

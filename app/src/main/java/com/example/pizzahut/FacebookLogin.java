@@ -49,7 +49,7 @@ public class FacebookLogin extends AppCompatActivity {
 
         else
         {
-            startActivity(new Intent(FacebookLogin.this, LoginMainActivity.class));
+            startActivity(new Intent(FacebookLogin.this, MainActivity.class));
         }
     }
 }

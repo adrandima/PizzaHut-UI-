@@ -44,7 +44,7 @@ public class GooglePassword extends AppCompatActivity {
         }
         else
         {
-            startActivity(new Intent(GooglePassword.this, LoginMainActivity.class));
+            startActivity(new Intent(GooglePassword.this, MainActivity.class));
         }
 
     }
