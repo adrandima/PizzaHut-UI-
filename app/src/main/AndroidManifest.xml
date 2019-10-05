@@ -16,14 +16,22 @@
         <activity android:name=".Customise_Item" />
         <activity android:name=".PizzaMenu" />
         <activity android:name=".MainMenu" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Edit" />
         <activity android:name=".Payment" />
         <activity android:name=".PaymentDetails" />
         <activity android:name=".Cart" />
+        <activity android:name=".Login" />
+        <activity android:name=".SignUp" />
         <activity android:name=".Takeaway_location" />
         <activity android:name=".Delivery_confirmation" />
         <activity android:name=".DirectionPage" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".FacebookLogin" />
+        <activity android:name=".GoogleEmail" />
+        <activity android:name=".ProfileMenu" />
+        <activity android:name=".EditProfile" />
+        <activity android:name=".GooglePassword" />
+        <activity android:name=".LoginMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolBar" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/signup"
         android:layout_width="94dp"
         android:layout_height="36dp"
         android:layout_marginStart="8dp"

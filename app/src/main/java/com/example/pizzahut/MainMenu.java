@@ -25,6 +25,7 @@ public class MainMenu extends AppCompatActivity {
     private ImageButton NavButton;
     private RadioButton delivery;
     private RadioButton pickup;
+    private ImageButton Profile;
     private boolean deliveryCheck = false;
     private boolean pickupCheck = false;
 
@@ -77,11 +78,19 @@ public class MainMenu extends AppCompatActivity {
 
 
         NavButton = (ImageButton)findViewById(R.id.NavButoon);
+        Profile = (ImageButton)findViewById(R.id.profile);
         final Intent intentMenu = new Intent(this,MainMenu.class);
+        final Intent intentProfile = new Intent(this,ProfileMenu.class);
         NavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(intentMenu);
+            }
+        });
+        Profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intentProfile);
             }
         });
 

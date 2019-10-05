@@ -49,4 +49,10 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+
+    <string-array name="country_codes">
+        <item>+1</item>
+        <item>+94</item>
+        <item>+61</item>
+    </string-array>
 </resources>
